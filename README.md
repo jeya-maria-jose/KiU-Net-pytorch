@@ -10,7 +10,7 @@ Official Pytorch Code for the paper "KiU-Net: Towards Accurate Segmentation of B
 In a generic "encoder-decoder" architecture , the initial few blocks of the encoder learn low-level features of the data while the later blocks learn the high-level features. Eventually, the encoder learns to map the data to lower dimensionality (in the spatial sense). The increasing receptive field size over the depth of the network, constrains the network to focus more on the higher-level features. In our proposed architecture , we introduce Ki-Net where we use overcomplete representations which constraints the receptive field from increasing. This is done by a simple change in the architecture of encoder where max-pooling is replaced by up-sampling. This helps the filters in deep layers focus more on the low-level details helping in fine segmentation.  This network, when augmented with U-Net is termed as KiU-Net which results in significant improvements in the case of segmenting small anatomical landmarks and blurred noisy boundaries while obtaining better overall performance. More details can be found in the paper.
 
 <p align="center">
-  <img src="img/arch.png" width="300"/>
+  <img src="img/arch.png" width="800"/>
 </p>
 
 # Using the Code
@@ -43,7 +43,7 @@ Train Folder-----
           0001.png
           0002.png
           .......
-Val Folder-----
+Validation Folder-----
       img----
           0001.png
           0002.png
@@ -66,16 +66,18 @@ Test Folder-----
 
 ### Training Command:
 
-<code> python train.py --train_dataset "enter train directory" --val_dataset "enter validation directory" --direc 'path for results to be saved' --batch_size 1 --epoch 400 --save_freq 10 --modelname "kiunet" --learning_rate 0.0001
- </code>
+```bash python train.py --train_dataset "enter train directory" --val_dataset "enter validation directory" --direc 'path for results to be saved' --batch_size 1 --epoch 400 --save_freq 10 --modelname "kiunet" --learning_rate 0.0001
+```
 
 ### Testing Command:
 
-<code> python test.py --loaddirec "./saved_model_path/model_name.pth" --val_dataset "test dataset directory" --direc 'path for results to be saved' --batch_size 1 --modelname "kiunet"
- </code>
+```bash python test.py --loaddirec "./saved_model_path/model_name.pth" --val_dataset "test dataset directory" --direc 'path for results to be saved' --batch_size 1 --modelname "kiunet"
+```
+
+The results-predicted segmentations maps will be placed in the results folder along with the model weights. Run the performance metrics code in MATLAB for calculating DICE Coefficient and Jaccard Index.
 
 
-# Acknowledgement:
+### Acknowledgement:
 
 The dataloader code is taken from <a href="https://github.com/cosmic-cortex/pytorch-UNet"> pytorch-UNet </a>
 
