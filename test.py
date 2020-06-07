@@ -1,3 +1,5 @@
+# Code for KiU-Net
+# Author: Jeya Maria Jose
 import argparse
 import torch
 import torchvision
@@ -16,8 +18,7 @@ import numpy as np
 from torchvision.utils import save_image
 import torch
 import torch.nn.init as init
-from arch.ae import knetplusbn,unetautoencoder,combautoencoder,upautoencoder,autoencoder,attnautoencoder,ocattnautoencoder,knetplus
-
+from arch.ae import kiunet,kinetwithsk,unet,autoencoder
 from utils import JointTransform2D, ImageToImage2D, Image2D
 from metrics import jaccard_index, f1_score, LogNLLLoss,classwise_f1
 from utils import chk_mkdir, Logger, MetricList
@@ -26,7 +27,7 @@ from functools import partial
 from random import randint
 
 
-parser = argparse.ArgumentParser(description='PyTorch_Overcomplete_AE')
+parser = argparse.ArgumentParser(description='KiU-Net')
 parser.add_argument('-j', '--workers', default=16, type=int, metavar='N',
                     help='number of data loading workers (default: 8)')
 parser.add_argument('--epochs', default=100, type=int, metavar='N',
@@ -62,26 +63,18 @@ parser.add_argument('--direc', default='./special', type=str,
                     help='directory to save')
 parser.add_argument('--crop', type=int, default=None)
 parser.add_argument('--device', default='cuda', type=str)
+parser.add_argument('--loaddirec', default='load', type=str)
 
 args = parser.parse_args()
 
 direc = args.direc
 modelname = args.modelname
+loaddirec = args.loaddirec
 
 def add_noise(img):
     noise = torch.randn(img.size()) * 0.1
     noisy_img = img + noise.cuda()
 
-    # imgn = img.cpu().numpy().shape
-    # print(imgn)
-    # mean = 0
-    # var = 1
-    # sigma = var**2
-    # gauss = np.random.normal(mean,sigma,(row,col))
-    # gauss = gauss.reshape(row,col)
-    # noise = torch.tensor(gauss)
-    # noisy_img = img + noise.cuda()
-    # noisy = image + gauss
     return noisy_img
      
 
@@ -100,18 +93,18 @@ valloader = DataLoader(val_dataset, 1, shuffle=True)
 
 device = torch.device("cuda")
 
-if modelname == "unetautoencoder":
-    model = unetautoencoder()
+if modelname == "unet":
+    model = unet()
 elif modelname =="autoencoder":
     model =autoencoder()
-elif modelname =="combautoencoder":
-    model = combautoencoder()
-elif modelname == "upautoencoder":
-    model = upautoencoder()
-elif modelname == "knetplusbn":
-    model = knetplusbn()
-elif modelname == "knetplus":
-    model = knetplus()
+elif modelname == "kiunet":
+    model = kiunet()
+elif modelname == "kinetwithsk":
+    model = kinetwithsk()
+elif modelname == "kinet":
+    model = kinet()
+elif modelname == "pspnet":
+    model = psp.PSPNet(layers=5, bins=(1, 2, 3, 6), dropout=0.1, classes=21, zoom_factor=1, use_ppm=True, pretrained=False).cuda()
 
 # if torch.cuda.device_count() > 1:
 #   print("Let's use", torch.cuda.device_count(), "GPUs!")
@@ -131,7 +124,7 @@ metric_list = MetricList({'jaccard': partial(jaccard_index),
                           'f1': partial(f1_score)})
 
 
-model.load_state_dict(torch.load("/home/jeyamariajose/Projects/Overcomplete-Autoencoder/Segmentation/final/knetplusbnaugmodel.pth"))
+model.load_state_dict(torch.load(loaddirec))
 model.eval()
 
 
