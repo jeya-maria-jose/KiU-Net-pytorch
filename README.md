@@ -80,7 +80,7 @@ The results including predicted segmentations maps will be placed in the results
 
 ### Notes:
 
-This code is written for binary segmentation of an ultrasound grayscale image. For using RGB images, just change the number of channels in the first and last layers in kiunet class found in <code> arch/ae.py </code>. For using KiU-Net for segmentation of more than one class, change the number of channels in the softmax layer using in kiunet class found in <code> arch/ae.py </code>.
+This code is written for binary segmentation of an ultrasound grayscale image. For using RGB images, just change the number of channels in the first and last layers in kiunet class found in <code> arch/ae.py </code>. For using KiU-Net for segmentation of more than one class, change the number of channels in the softmax layer in kiunet class found in <code> arch/ae.py </code>.
 
 ### Acknowledgement:
 
