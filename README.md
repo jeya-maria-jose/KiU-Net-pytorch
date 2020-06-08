@@ -78,6 +78,9 @@ python test.py --loaddirec "./saved_model_path/model_name.pth" --val_dataset "te
 
 The results including predicted segmentations maps will be placed in the results folder along with the model weights. Run the performance metrics code in MATLAB for calculating DICE Coefficient and Jaccard Index.
 
+### Notes:
+
+This code is written for binary segmentation of an ultrasound grayscale image. For using RGB images, just change the number of channels in the first and last layers in kiunet class found in <code> arch/ae.py </code>. For using KiU-Net for segmentation of more than one class, change the number of channels in the softmax layer using in kiunet class found in <code> arch/ae.py </code>.
 
 ### Acknowledgement:
 
