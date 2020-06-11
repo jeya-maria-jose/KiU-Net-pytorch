@@ -1,6 +1,6 @@
 # KiU-Net-pytorch
 
- <a href="https://comingsoon"> Paper </a> |  <a href="https://sites.google.com/view/kiunet/home"> Project Page </a>
+ <a href="https://arxiv.org/abs/2006.04878"> Paper </a> |  <a href="https://sites.google.com/view/kiunet/home"> Project Page </a>
 
 
 Official Pytorch Code for the paper "KiU-Net: Towards Accurate Segmentation of Biomedical Images using Over-complete Representations" , appearing in MICCAI 2020.
@@ -89,6 +89,15 @@ The dataloader code is taken from <a href="https://github.com/cosmic-cortex/pyto
 
 # Citation:
 
-Coming Soon
+```bash 
+@misc{jose2020kiunet,
+    title={KiU-Net: Towards Accurate Segmentation of Biomedical Images using Over-complete Representations},
+    author={Jeya Maria Jose and Vishwanath Sindagi and Ilker Hacihaliloglu and Vishal M. Patel},
+    year={2020},
+    eprint={2006.04878},
+    archivePrefix={arXiv},
+    primaryClass={eess.IV}
+}
+```
 
 Open an issue in case of any queries.
