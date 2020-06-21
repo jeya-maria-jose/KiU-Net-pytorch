@@ -189,7 +189,7 @@ class kiunet(nn.Module):
         super(kiunet, self).__init__()
         
 
-        self.encoder1 = nn.Conv2d(3, 16, 3, stride=1, padding=1)  # b, 16, 10, 10
+        self.encoder1 = nn.Conv2d(1, 16, 3, stride=1, padding=1)  # b, 16, 10, 10
         self.en1_bn = nn.BatchNorm2d(16)
         self.encoder2=   nn.Conv2d(16, 32, 3, stride=1, padding=1)  # b, 8, 3, 3
         self.en2_bn = nn.BatchNorm2d(32)
