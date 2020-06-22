@@ -189,14 +189,14 @@ class kiunet(nn.Module):
         super(kiunet, self).__init__()
         
 
-        self.encoder1 = nn.Conv2d(1, 16, 3, stride=1, padding=1)  # b, 16, 10, 10
+        self.encoder1 = nn.Conv2d(1, 16, 3, stride=1, padding=1)  # First Layer GrayScale Image , change to input channels to 3 in case of RGB 
         self.en1_bn = nn.BatchNorm2d(16)
-        self.encoder2=   nn.Conv2d(16, 32, 3, stride=1, padding=1)  # b, 8, 3, 3
+        self.encoder2=   nn.Conv2d(16, 32, 3, stride=1, padding=1)  
         self.en2_bn = nn.BatchNorm2d(32)
         self.encoder3=   nn.Conv2d(32, 64, 3, stride=1, padding=1)
         self.en3_bn = nn.BatchNorm2d(64)
 
-        self.decoder1 =   nn.Conv2d(64, 32, 3, stride=1, padding=1)  # b, 1, 28, 28
+        self.decoder1 =   nn.Conv2d(64, 32, 3, stride=1, padding=1)   
         self.de1_bn = nn.BatchNorm2d(32)
         self.decoder2 =   nn.Conv2d(32,16, 3, stride=1, padding=1)
         self.de2_bn = nn.BatchNorm2d(16)
@@ -210,7 +210,7 @@ class kiunet(nn.Module):
         self.decoderf3 =   nn.Conv2d(16, 8, 3, stride=1, padding=1)
         self.def3_bn = nn.BatchNorm2d(8)
 
-        self.encoderf1 =   nn.Conv2d(3, 16, 3, stride=1, padding=1)
+        self.encoderf1 =   nn.Conv2d(1, 16, 3, stride=1, padding=1)  # First Layer GrayScale Image , change to input channels to 3 in case of RGB 
         self.enf1_bn = nn.BatchNorm2d(16)
         self.encoderf2=   nn.Conv2d(16, 32, 3, stride=1, padding=1)
         self.enf2_bn = nn.BatchNorm2d(32)
@@ -251,14 +251,14 @@ class kiunet(nn.Module):
     
     def forward(self, x):
 
-        out = F.relu(self.en1_bn(F.max_pool2d(self.encoder1(x),2,2)))
-        out1 = F.relu(self.enf1_bn(F.interpolate(self.encoderf1(x),scale_factor=(2,2),mode ='bilinear')))
+        out = F.relu(self.en1_bn(F.max_pool2d(self.encoder1(x),2,2)))  #U-Net branch
+        out1 = F.relu(self.enf1_bn(F.interpolate(self.encoderf1(x),scale_factor=(2,2),mode ='bilinear'))) #Ki-Net branch
         tmp = out
-        out = torch.add(out,F.interpolate(F.relu(self.inte1_1bn(self.intere1_1(out1))),scale_factor=(0.25,0.25),mode ='bilinear'))
-        out1 = torch.add(out1,F.interpolate(F.relu(self.inte1_2bn(self.intere1_2(tmp))),scale_factor=(4,4),mode ='bilinear'))
+        out = torch.add(out,F.interpolate(F.relu(self.inte1_1bn(self.intere1_1(out1))),scale_factor=(0.25,0.25),mode ='bilinear')) #CRFB
+        out1 = torch.add(out1,F.interpolate(F.relu(self.inte1_2bn(self.intere1_2(tmp))),scale_factor=(4,4),mode ='bilinear')) #CRFB
         
-        u1 = out
-        o1 = out1
+        u1 = out  #skip conn
+        o1 = out1  #skip conn
 
         out = F.relu(self.en2_bn(F.max_pool2d(self.encoder2(out),2,2)))
         out1 = F.relu(self.enf2_bn(F.interpolate(self.encoderf2(out1),scale_factor=(2,2),mode ='bilinear')))
@@ -277,16 +277,16 @@ class kiunet(nn.Module):
         
         ### End of encoder block
 
-        # print(out.shape,out1.shape)
+        ### Start Decoder
         
-        out = F.relu(self.de1_bn(F.interpolate(self.decoder1(out),scale_factor=(2,2),mode ='bilinear')))
-        out1 = F.relu(self.def1_bn(F.max_pool2d(self.decoderf1(out1),2,2)))
+        out = F.relu(self.de1_bn(F.interpolate(self.decoder1(out),scale_factor=(2,2),mode ='bilinear')))  #U-NET
+        out1 = F.relu(self.def1_bn(F.max_pool2d(self.decoderf1(out1),2,2))) #Ki-NET
         tmp = out
         out = torch.add(out,F.interpolate(F.relu(self.intd1_1bn(self.interd1_1(out1))),scale_factor=(0.0625,0.0625),mode ='bilinear'))
         out1 = torch.add(out1,F.interpolate(F.relu(self.intd1_2bn(self.interd1_2(tmp))),scale_factor=(16,16),mode ='bilinear'))
         
-        out = torch.add(out,u2)
-        out1 = torch.add(out1,o2)
+        out = torch.add(out,u2)  #skip conn
+        out1 = torch.add(out1,o2)  #skip conn
 
         out = F.relu(self.de2_bn(F.interpolate(self.decoder2(out),scale_factor=(2,2),mode ='bilinear')))
         out1 = F.relu(self.def2_bn(F.max_pool2d(self.decoderf2(out1),2,2)))
@@ -302,12 +302,12 @@ class kiunet(nn.Module):
 
         
 
-        out = torch.add(out,out1)
+        out = torch.add(out,out1) # fusion of both branches
 
-        out = F.relu(self.final(out))
+        out = F.relu(self.final(out))  #1*1 conv
         
 
         out = self.soft(out)
-        # print(out.shape)
+        
         return out
 
