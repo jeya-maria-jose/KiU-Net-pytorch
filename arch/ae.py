@@ -311,3 +311,348 @@ class kiunet(nn.Module):
         
         return out
 
+class reskiunet(nn.Module):
+    
+    def __init__(self):
+        super(reskiunet, self).__init__()
+        
+
+        self.encoder1 = nn.Conv2d(3, 16, 3, stride=1, padding=1) 
+        self.en1 = nn.Conv2d(3, 16, 1, stride=1, padding=0) # b, 16, 10, 10
+        self.en1_bn = nn.BatchNorm2d(16)
+        self.encoder2=   nn.Conv2d(16, 32, 3, stride=1, padding=1)  # b, 8, 3, 3
+        self.en2=   nn.Conv2d(16, 32, 1, stride=1, padding=0)
+        self.en2_bn = nn.BatchNorm2d(32)
+        self.encoder3=   nn.Conv2d(32, 64, 3, stride=1, padding=1)
+        self.en3=   nn.Conv2d(32, 64, 1, stride=1, padding=0)
+        self.en3_bn = nn.BatchNorm2d(64)
+
+        self.decoder1 =   nn.Conv2d(64, 32, 3, stride=1, padding=1)  # b, 1, 28, 28
+        self.de1 =   nn.Conv2d(64, 32, 1, stride=1, padding=0) 
+        self.de1_bn = nn.BatchNorm2d(32)
+        self.decoder2 =   nn.Conv2d(32,16, 3, stride=1, padding=1)
+        self.de2 =   nn.Conv2d(32,16, 1, stride=1, padding=0)
+        self.de2_bn = nn.BatchNorm2d(16)
+        self.decoder3 =   nn.Conv2d(16, 8, 3, stride=1, padding=1)
+        self.de3 =   nn.Conv2d(16, 8, 1, stride=1, padding=0)
+        self.de3_bn = nn.BatchNorm2d(8)
+
+        self.decoderf1 =   nn.Conv2d(64, 32, 3, stride=1, padding=1)
+        self.def1 =   nn.Conv2d(64, 32, 1, stride=1, padding=0)
+        self.def1_bn = nn.BatchNorm2d(32)
+        self.decoderf2=   nn.Conv2d(32, 16, 3, stride=1, padding=1)
+        self.def2=   nn.Conv2d(32, 16, 1, stride=1, padding=0)
+        self.def2_bn = nn.BatchNorm2d(16)
+        self.decoderf3 =   nn.Conv2d(16, 8, 3, stride=1, padding=1)
+        self.def3 =   nn.Conv2d(16, 8, 1, stride=1, padding=0)
+        self.def3_bn = nn.BatchNorm2d(8)
+
+        self.encoderf1 =   nn.Conv2d(3, 16, 3, stride=1, padding=1)
+        self.enf1 =   nn.Conv2d(3, 16, 1, stride=1, padding=0)
+        self.enf1_bn = nn.BatchNorm2d(16)
+        self.encoderf2=   nn.Conv2d(16, 32, 3, stride=1, padding=1)
+        self.enf2=   nn.Conv2d(16, 32, 1, stride=1, padding=0)
+        self.enf2_bn = nn.BatchNorm2d(32)
+        self.encoderf3 =   nn.Conv2d(32, 64, 3, stride=1, padding=1)
+        self.enf3 =   nn.Conv2d(32, 64, 1, stride=1, padding=0)
+        self.enf3_bn = nn.BatchNorm2d(64)
+
+        self.intere1_1 = nn.Conv2d(16,16,3, stride=1, padding=1)
+        self.inte1_1bn = nn.BatchNorm2d(16)
+        self.intere2_1 = nn.Conv2d(32,32,3, stride=1, padding=1)
+        self.inte2_1bn = nn.BatchNorm2d(32)
+        self.intere3_1 = nn.Conv2d(64,64,3, stride=1, padding=1)
+        self.inte3_1bn = nn.BatchNorm2d(64)
+
+        self.intere1_2 = nn.Conv2d(16,16,3, stride=1, padding=1)
+        self.inte1_2bn = nn.BatchNorm2d(16)
+        self.intere2_2 = nn.Conv2d(32,32,3, stride=1, padding=1)
+        self.inte2_2bn = nn.BatchNorm2d(32)
+        self.intere3_2 = nn.Conv2d(64,64,3, stride=1, padding=1)
+        self.inte3_2bn = nn.BatchNorm2d(64)
+
+        self.interd1_1 = nn.Conv2d(32,32,3, stride=1, padding=1)
+        self.intd1_1bn = nn.BatchNorm2d(32)
+        self.interd2_1 = nn.Conv2d(16,16,3, stride=1, padding=1)
+        self.intd2_1bn = nn.BatchNorm2d(16)
+        self.interd3_1 = nn.Conv2d(64,64,3, stride=1, padding=1)
+        self.intd3_1bn = nn.BatchNorm2d(64)
+
+        self.interd1_2 = nn.Conv2d(32,32,3, stride=1, padding=1)
+        self.intd1_2bn = nn.BatchNorm2d(32)
+        self.interd2_2 = nn.Conv2d(16,16,3, stride=1, padding=1)
+        self.intd2_2bn = nn.BatchNorm2d(16)
+        self.interd3_2 = nn.Conv2d(64,64,3, stride=1, padding=1)
+        self.intd3_2bn = nn.BatchNorm2d(64)
+
+        self.final = nn.Conv2d(8,2,1,stride=1,padding=0)
+        
+        self.soft = nn.Softmax(dim =1)
+    
+    def forward(self, x):
+
+        out = torch.add(self.en1(x),self.encoder1(x))  #init
+        out = F.relu(self.en1_bn(F.max_pool2d(out,2,2))) # U-Net
+        out1 = torch.add(self.enf1(x),self.encoder1(x)) #init
+        out1 = F.relu(self.enf1_bn(F.interpolate(self.encoderf1(x),scale_factor=(2,2),mode ='bilinear'))) # ki-net
+
+        tmp = out
+
+        out = torch.add(out,F.interpolate(F.relu(self.inte1_1bn(self.intere1_1(out1))),scale_factor=(0.25,0.25),mode ='bilinear'))
+        out1 = torch.add(out1,F.interpolate(F.relu(self.inte1_2bn(self.intere1_2(tmp))),scale_factor=(4,4),mode ='bilinear'))
+        
+        u1 = out
+        o1 = out1
+
+
+        out = torch.add(self.en2(out),self.encoder2(out)) #res
+        out1 = torch.add(self.enf2(out1),self.encoderf2(out1)) #res
+
+        out = F.relu(self.en2_bn(F.max_pool2d(out,2,2)))
+        out1 = F.relu(self.enf2_bn(F.interpolate(out1,scale_factor=(2,2),mode ='bilinear')))
+        
+        tmp = out
+        out = torch.add(out,F.interpolate(F.relu(self.inte2_1bn(self.intere2_1(out1))),scale_factor=(0.0625,0.0625),mode ='bilinear'))
+        out1 = torch.add(out1,F.interpolate(F.relu(self.inte2_2bn(self.intere2_2(tmp))),scale_factor=(16,16),mode ='bilinear'))
+        
+        u2 = out
+        o2 = out1
+
+        out = torch.add(self.en3(out),self.encoder3(out)) #res
+        out1 = torch.add(self.enf3(out1),self.encoderf3(out1)) #res
+
+        out = F.relu(self.en3_bn(F.max_pool2d(out,2,2)))
+        out1 = F.relu(self.enf3_bn(F.interpolate(out1,scale_factor=(2,2),mode ='bilinear')))
+        tmp = out
+        out = torch.add(out,F.interpolate(F.relu(self.inte3_1bn(self.intere3_1(out1))),scale_factor=(0.015625,0.015625),mode ='bilinear'))
+        out1 = torch.add(out1,F.interpolate(F.relu(self.inte3_2bn(self.intere3_2(tmp))),scale_factor=(64,64),mode ='bilinear'))
+        
+        ### End of encoder block
+
+        # print(out.shape,out1.shape)
+        
+        out = torch.add(self.de1(out),self.decoder1(out)) #res
+        out1 = torch.add(self.def1(out1),self.decoderf1(out1)) #res
+        out = F.relu(self.de1_bn(F.interpolate(out,scale_factor=(2,2),mode ='bilinear')))
+        out1 = F.relu(self.def1_bn(F.max_pool2d(out1,2,2)))
+        
+
+        tmp = out
+        out = torch.add(out,F.interpolate(F.relu(self.intd1_1bn(self.interd1_1(out1))),scale_factor=(0.0625,0.0625),mode ='bilinear'))
+        out1 = torch.add(out1,F.interpolate(F.relu(self.intd1_2bn(self.interd1_2(tmp))),scale_factor=(16,16),mode ='bilinear'))
+        
+        out = torch.add(out,u2)
+        out1 = torch.add(out1,o2)
+
+        out = torch.add(self.de2(out),self.decoder2(out)) #res
+        out1 = torch.add(self.def2(out1),self.decoderf2(out1)) #res
+        out = F.relu(self.de2_bn(F.interpolate(out,scale_factor=(2,2),mode ='bilinear')))
+        out1 = F.relu(self.def2_bn(F.max_pool2d(out1,2,2)))
+
+        tmp = out
+        
+        out = torch.add(out,F.interpolate(F.relu(self.intd2_1bn(self.interd2_1(out1))),scale_factor=(0.25,0.25),mode ='bilinear'))
+        out1 = torch.add(out1,F.interpolate(F.relu(self.intd2_2bn(self.interd2_2(tmp))),scale_factor=(4,4),mode ='bilinear'))
+        
+        out = torch.add(out,u1)
+        out1 = torch.add(out1,o1)
+
+        out = torch.add(self.de3(out),self.decoder3(out)) #res
+        out1 = torch.add(self.def3(out1),self.decoderf3(out1)) #res
+        out = F.relu(self.de3_bn(F.interpolate(out,scale_factor=(2,2),mode ='bilinear')))
+        out1 = F.relu(self.def3_bn(F.max_pool2d(out1,2,2)))
+
+        
+
+        out = torch.add(out,out1)
+
+        out = F.relu(self.final(out))
+        
+
+        out = self.soft(out)
+        # print(out.shape)
+        return out
+
+class DenseBlock(nn.Module):
+
+    def __init__(self, in_planes):
+        super(DenseBlock, self).__init__()
+        # print(int(in_planes/4))
+        self.c1 = nn.Conv2d(in_planes,in_planes,1,stride=1, padding=0)
+        self.c2 = nn.Conv2d(in_planes,int(in_planes/4),3,stride=1, padding=1)
+        self.b1 = nn.BatchNorm2d(in_planes)
+        self.b2 = nn.BatchNorm2d(int(in_planes/4))
+        self.c3 = nn.Conv2d(in_planes+int(in_planes/4),in_planes,1,stride=1, padding=0)
+        self.c4 = nn.Conv2d(in_planes,int(in_planes/4),3,stride=1, padding=1)        
+
+        self.c5 = nn.Conv2d(in_planes+int(in_planes/2),in_planes,1,stride=1, padding=0)
+        self.c6 = nn.Conv2d(in_planes,int(in_planes/4),3,stride=1, padding=1)        
+
+        self.c7 = nn.Conv2d(in_planes+3*int(in_planes/4),in_planes,1,stride=1, padding=0)
+        self.c8 = nn.Conv2d(in_planes,int(in_planes/4),3,stride=1, padding=1)        
+                    
+    def forward(self, x):
+        org = x
+        # print(x.shape)
+        x= F.relu(self.b1(self.c1(x)))
+        # print(x.shape)
+        x= F.relu(self.b2(self.c2(x)))
+        d1 = x
+        # print(x.shape)
+        x = torch.cat((org,d1),1)
+        x= F.relu(self.b1(self.c3(x)))
+        x= F.relu(self.b2(self.c4(x)))
+        d2= x
+        x = torch.cat((org,d1,d2),1)
+        x= F.relu(self.b1(self.c5(x)))
+        x= F.relu(self.b2(self.c6(x)))
+        d3= x
+        x = torch.cat((org,d1,d2,d3),1)
+        x= F.relu(self.b1(self.c7(x)))
+        x= F.relu(self.b2(self.c8(x)))
+        d4= x
+        x = torch.cat((d1,d2,d3,d4),1)
+        x = torch.add(org,x)
+        return x
+
+
+class densekiunet(nn.Module):
+    
+    def __init__(self):
+        super(densekiunet, self).__init__()
+        
+
+        self.encoder1 = nn.Conv2d(3, 16, 3, stride=1, padding=1) 
+        self.en1 =  DenseBlock(in_planes = 16) # b, 16, 10, 10
+        self.en1_bn = nn.BatchNorm2d(16)
+        self.encoder2=   nn.Conv2d(16, 32, 3, stride=1, padding=1)  # b, 8, 3, 3
+        self.en2=    DenseBlock(in_planes = 32)
+        self.en2_bn = nn.BatchNorm2d(32)
+        self.encoder3=   nn.Conv2d(32, 64, 3, stride=1, padding=1)
+        self.en3=    DenseBlock(in_planes = 64)
+        self.en3_bn = nn.BatchNorm2d(64)
+
+        self.decoder1 =   nn.Conv2d(64, 32, 3, stride=1, padding=1)  # b, 1, 28, 28
+        self.de1 =   DenseBlock(in_planes = 32)
+        self.de1_bn = nn.BatchNorm2d(32)
+        self.decoder2 =   nn.Conv2d(32,16, 3, stride=1, padding=1)
+        self.de2 =    DenseBlock(in_planes = 16)
+        self.de2_bn = nn.BatchNorm2d(16)
+        self.decoder3 =   nn.Conv2d(16, 8, 3, stride=1, padding=1)
+        self.de3 =   DenseBlock(in_planes = 8)
+        self.de3_bn = nn.BatchNorm2d(8)
+
+        self.decoderf1 =   nn.Conv2d(64, 32, 3, stride=1, padding=1)
+        self.def1 =    DenseBlock(in_planes = 32)
+        self.def1_bn = nn.BatchNorm2d(32)
+        self.decoderf2=   nn.Conv2d(32, 16, 3, stride=1, padding=1)
+        self.def2=    DenseBlock(in_planes = 16)
+        self.def2_bn = nn.BatchNorm2d(16)
+        self.decoderf3 =   nn.Conv2d(16, 8, 3, stride=1, padding=1)
+        self.def3 =    DenseBlock(in_planes = 8)
+        self.def3_bn = nn.BatchNorm2d(8)
+
+        self.encoderf1 =   nn.Conv2d(3, 16, 3, stride=1, padding=1)
+        self.enf1 =    DenseBlock(in_planes = 16)
+        self.enf1_bn = nn.BatchNorm2d(16)
+        self.encoderf2=   nn.Conv2d(16, 32, 3, stride=1, padding=1)
+        self.enf2=    DenseBlock(in_planes = 32)
+        self.enf2_bn = nn.BatchNorm2d(32)
+        self.encoderf3 =   nn.Conv2d(32, 64, 3, stride=1, padding=1)
+        self.enf3 =    DenseBlock(in_planes = 64)
+        self.enf3_bn = nn.BatchNorm2d(64)
+
+        self.intere1_1 = nn.Conv2d(16,16,3, stride=1, padding=1)
+        self.inte1_1bn = nn.BatchNorm2d(16)
+        self.intere2_1 = nn.Conv2d(32,32,3, stride=1, padding=1)
+        self.inte2_1bn = nn.BatchNorm2d(32)
+        self.intere3_1 = nn.Conv2d(64,64,3, stride=1, padding=1)
+        self.inte3_1bn = nn.BatchNorm2d(64)
+
+        self.intere1_2 = nn.Conv2d(16,16,3, stride=1, padding=1)
+        self.inte1_2bn = nn.BatchNorm2d(16)
+        self.intere2_2 = nn.Conv2d(32,32,3, stride=1, padding=1)
+        self.inte2_2bn = nn.BatchNorm2d(32)
+        self.intere3_2 = nn.Conv2d(64,64,3, stride=1, padding=1)
+        self.inte3_2bn = nn.BatchNorm2d(64)
+
+        self.interd1_1 = nn.Conv2d(32,32,3, stride=1, padding=1)
+        self.intd1_1bn = nn.BatchNorm2d(32)
+        self.interd2_1 = nn.Conv2d(16,16,3, stride=1, padding=1)
+        self.intd2_1bn = nn.BatchNorm2d(16)
+        self.interd3_1 = nn.Conv2d(64,64,3, stride=1, padding=1)
+        self.intd3_1bn = nn.BatchNorm2d(64)
+
+        self.interd1_2 = nn.Conv2d(32,32,3, stride=1, padding=1)
+        self.intd1_2bn = nn.BatchNorm2d(32)
+        self.interd2_2 = nn.Conv2d(16,16,3, stride=1, padding=1)
+        self.intd2_2bn = nn.BatchNorm2d(16)
+        self.interd3_2 = nn.Conv2d(64,64,3, stride=1, padding=1)
+        self.intd3_2bn = nn.BatchNorm2d(64)
+
+        self.final = nn.Conv2d(8,2,1,stride=1,padding=0)
+        
+        self.soft = nn.Softmax(dim =1)
+    
+    def forward(self, x):
+
+        out = F.relu(self.en1_bn(F.max_pool2d(self.en1(self.encoder1(x)),2,2)))
+        out1 = F.relu(self.enf1_bn(F.interpolate(self.enf1(self.encoderf1(x)),scale_factor=(2,2),mode ='bilinear')))
+        tmp = out
+        out = torch.add(out,F.interpolate(F.relu(self.inte1_1bn(self.intere1_1(out1))),scale_factor=(0.25,0.25),mode ='bilinear'))
+        out1 = torch.add(out1,F.interpolate(F.relu(self.inte1_2bn(self.intere1_2(tmp))),scale_factor=(4,4),mode ='bilinear'))
+        
+        u1 = out
+        o1 = out1
+
+        out = F.relu(self.en2_bn(F.max_pool2d(self.en2(self.encoder2(out)),2,2)))
+        out1 = F.relu(self.enf2_bn(F.interpolate(self.enf2(self.encoderf2(out1)),scale_factor=(2,2),mode ='bilinear')))
+        tmp = out
+        out = torch.add(out,F.interpolate(F.relu(self.inte2_1bn(self.intere2_1(out1))),scale_factor=(0.0625,0.0625),mode ='bilinear'))
+        out1 = torch.add(out1,F.interpolate(F.relu(self.inte2_2bn(self.intere2_2(tmp))),scale_factor=(16,16),mode ='bilinear'))
+        
+        u2 = out
+        o2 = out1
+
+        out = F.relu(self.en3_bn(F.max_pool2d(self.en3(self.encoder3(out)),2,2)))
+        out1 = F.relu(self.enf3_bn(F.interpolate(self.enf3(self.encoderf3(out1)),scale_factor=(2,2),mode ='bilinear')))
+        tmp = out
+        out = torch.add(out,F.interpolate(F.relu(self.inte3_1bn(self.intere3_1(out1))),scale_factor=(0.015625,0.015625),mode ='bilinear'))
+        out1 = torch.add(out1,F.interpolate(F.relu(self.inte3_2bn(self.intere3_2(tmp))),scale_factor=(64,64),mode ='bilinear'))
+        
+        ### End of encoder block
+
+        # print(out.shape,out1.shape)
+        
+        out = F.relu(self.de1_bn(F.interpolate(self.de1(self.decoder1(out)),scale_factor=(2,2),mode ='bilinear')))
+        out1 = F.relu(self.def1_bn(F.max_pool2d(self.def1(self.decoderf1(out1)),2,2)))
+        tmp = out
+        out = torch.add(out,F.interpolate(F.relu(self.intd1_1bn(self.interd1_1(out1))),scale_factor=(0.0625,0.0625),mode ='bilinear'))
+        out1 = torch.add(out1,F.interpolate(F.relu(self.intd1_2bn(self.interd1_2(tmp))),scale_factor=(16,16),mode ='bilinear'))
+        
+        out = torch.add(out,u2)
+        out1 = torch.add(out1,o2)
+
+        out = F.relu(self.de2_bn(F.interpolate(self.de2(self.decoder2(out)),scale_factor=(2,2),mode ='bilinear')))
+        out1 = F.relu(self.def2_bn(F.max_pool2d(self.def2(self.decoderf2(out1)),2,2)))
+        tmp = out
+        out = torch.add(out,F.interpolate(F.relu(self.intd2_1bn(self.interd2_1(out1))),scale_factor=(0.25,0.25),mode ='bilinear'))
+        out1 = torch.add(out1,F.interpolate(F.relu(self.intd2_2bn(self.interd2_2(tmp))),scale_factor=(4,4),mode ='bilinear'))
+        
+        out = torch.add(out,u1)
+        out1 = torch.add(out1,o1)
+
+        out = F.relu(self.de3_bn(F.interpolate(self.de3(self.decoder3(out)),scale_factor=(2,2),mode ='bilinear')))
+        out1 = F.relu(self.def3_bn(F.max_pool2d(self.def3(self.decoderf3(out1)),2,2)))
+
+        
+
+        out = torch.add(out,out1)
+
+        out = F.relu(self.final(out))
+        
+
+        out = self.soft(out)
+        # print(out.shape)
+        return out
+
