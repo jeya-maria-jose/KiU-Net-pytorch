@@ -3,8 +3,9 @@
  <a href="https://arxiv.org/abs/2006.04878"> Paper </a> |  <a href="https://sites.google.com/view/kiunet/home"> Project Page </a>
 
 
-Official Pytorch Code for the paper "KiU-Net: Towards Accurate Segmentation of Biomedical Images using Over-complete Representations" , appearing in MICCAI 2020 and it Journal Extension:
+Official Pytorch Code for the paper "KiU-Net: Towards Accurate Segmentation of Biomedical Images using Over-complete Representations" , presented at MICCAI 2020 and its
 
+Journal Extension:
 "KiU-Net: Overcomplete Convolutional Architectures for Biomedical Image and Volumetric Segmentation" (Under Review)
 
 # About this repo:
@@ -16,11 +17,8 @@ This repo hosts the code for the following networks:
 3) Res-KiU-Net
 4) Dense-KiU-Net
 
-It also has dataloaders organized for the following:
+It also has dataloaders organized for generic 2D image segmentation and 3D volumetric segmentation for BraTS, LiTS dataset; for easy benchmarking of medical image and volumetric segmentation algorithms.
 
-1) A generic 2D image segmentation dataloader
-2) BraTS dataset dataloader
-3) LiTS dataset dataloader
 
 # Introduction
 
@@ -40,7 +38,7 @@ In a generic "encoder-decoder" architecture , the initial few blocks of the enco
 
 ### Links for downloading the public Datasets:
 
-1) GlAS Dataset - <a href="https://warwick.ac.uk/fac/sci/dcs/research/tia/glascontest/"> Link </a>  
+1) GLAS Dataset - <a href="https://warwick.ac.uk/fac/sci/dcs/research/tia/glascontest/"> Link </a>  
 2) RITE Dataset - <a href="https://medicine.uiowa.edu/eye/rite-dataset"> Link </a>  
 3) BraTS Dataset - <a href="https://www.med.upenn.edu/cbica/brats2020/data.html"> Link </a>  
 4) LiTS Dataset - <a href="https://competitions.codalab.org/competitions/17094"> Link </a>  
@@ -116,18 +114,19 @@ The results including predicted segmentations maps will be placed in the results
 
 # KiU-Net 3D:
 
-The model file of KiU-Net 3D can be found in 
+The model file of KiU-Net 3D can be found at <code> arch/ae.py </code>.
+
 ### Using the Code for BraTS Dataset
 
-Check out readme.MD in BRATS/ folder for details on training KiU-Net 3D for BraTS dataset.
+Check out [README.MD]() in BRATS/ folder for details on training KiU-Net 3D for BraTS dataset.
 
 ### Using the Code for LiTS Dataset
 
-Check out readme.MD in LiTS/ folder for details on training KiU-Net 3D for LiTS dataset.
+Check out [README.MD]() in LiTS/ folder for details on training KiU-Net 3D for LiTS dataset.
  
 ### Acknowledgement:
 
-The dataloader code is inspired from <a href="https://github.com/cosmic-cortex/pytorch-UNet"> pytorch-UNet </a>. We also thank the authors of 
+The dataloader code is inspired from <a href="https://github.com/cosmic-cortex/pytorch-UNet"> pytorch-UNet </a>, [BraTS 2018 dataloader](https://github.com/ieee820/BraTS2018-tumor-segmentation) and [LiTS dataloader](https://github.com/assassint2017/MICCAI-LITS2017).
 
 # Citation:
 

@@ -1,0 +1,41 @@
+net: kiunet
+net_params:
+  n: 16
+  dropout: 0.3
+  norm: gn
+criterion: cross_entropy_dice
+alpha: 0.01
+dataset: SingleData
+seed: 2001
+gpu: 0
+batch_size: 1
+num_epochs: 300
+save_freq: 20    # save every 50 epochs
+valid_freq: 50   # validate every 10 epochs
+start_iter: 0
+opt: Adam
+opt_params:
+  lr: 0.001
+  weight_decay: 0.0001
+  amsgrad: true
+#opt: SGD
+#opt_params:
+#  lr: 0.01
+#  momentum: 0.9
+#  weight_decay: 0.0001
+workers: 8
+#schedule: {60, 120} # original for 160 epochs
+schedule: {150, 250} # based on epochs
+#data settings
+train_list: all.txt
+train_transforms: # for training
+  Compose([
+    RandCrop(32),
+    NumpyType((np.float32, np.int64)),
+    ])
+test_transforms: # for testing
+  Compose([
+    RandCrop(64),
+    Pad((0, 0, 0, 0, 0)),
+    NumpyType((np.float32, np.int64)),
+    ])
