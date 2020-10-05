@@ -26,7 +26,7 @@ from functools import partial
 from random import randint
 import timeit
 
-from arch.ae import kiunet,kinetwithsk,unet,autoencoder
+from arch.ae import kiunet,kinetwithsk,unet,autoencoder, reskiunet,densekiunet, kiunet3d
 
 def mae(imageA, imageB):
     # the 'Mean Squared Error' between the two images is the
@@ -150,6 +150,12 @@ elif modelname == "kinetwithsk":
     model = kinetwithsk()
 elif modelname == "kinet":
     model = kinet()
+elif modelname == "reskiunet":
+    model = reskiunet()
+elif modelname == "densekiunet":
+    model = densekiunet()
+elif modelname == "kiunet3d":
+    model = kiunder3d()
 elif modelname == "pspnet":
     model = psp.PSPNet(layers=5, bins=(1, 2, 3, 6), dropout=0.1, classes=21, zoom_factor=1, use_ppm=True, pretrained=False).cuda()
 
