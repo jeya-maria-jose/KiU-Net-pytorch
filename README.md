@@ -118,11 +118,11 @@ The model file of KiU-Net 3D can be found at <code> arch/ae.py </code>.
 
 ### Using the Code for BraTS Dataset
 
-Check out [README.MD](https://github.com/jeya-maria-jose/KiU-Net-pytorch/tree/master/BRATS) in "BRATS/" folder for details on training KiU-Net 3D for BraTS dataset.
+Check out [readme](https://github.com/jeya-maria-jose/KiU-Net-pytorch/tree/master/BRATS) in "BRATS/" folder for details on training KiU-Net 3D for BraTS dataset.
 
 ### Using the Code for LiTS Dataset
 
-Check out [README.MD](https://github.com/jeya-maria-jose/KiU-Net-pytorch/tree/master/LiTS) in "LiTS/" folder for details on training KiU-Net 3D for LiTS dataset.
+Check out [readme](https://github.com/jeya-maria-jose/KiU-Net-pytorch/tree/master/LiTS) in "LiTS/" folder for details on training KiU-Net 3D for LiTS dataset.
  
 ### Acknowledgement:
 
