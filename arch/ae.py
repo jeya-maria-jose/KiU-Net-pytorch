@@ -101,23 +101,23 @@ class kinetwithsk(nn.Module):
         self.encoder2=   nn.Conv2d(32, 64, 3, stride=1, padding=1)  # b, 8, 3, 3
         self.encoder3=   nn.Conv2d(64, 128, 3, stride=1, padding=1)
         
-        self.encoder4=   nn.Conv2d(128, 256, 3, stride=1, padding=1)
-        self.encoder5=   nn.Conv2d(256, 512, 3, stride=1, padding=1)
+        # self.encoder4=   nn.Conv2d(128, 256, 3, stride=1, padding=1)
+        # self.encoder5=   nn.Conv2d(256, 512, 3, stride=1, padding=1)
         
-        self.decoder1 = nn.Conv2d(512, 256, 3, stride=1,padding=2)  # b, 16, 5, 5
-        self.decoder2 =   nn.Conv2d(256, 128, 3, stride=1, padding=2)  # b, 8, 15, 1
+        # self.decoder1 = nn.Conv2d(512, 256, 3, stride=1,padding=2)  # b, 16, 5, 5
+        # self.decoder2 =   nn.Conv2d(256, 128, 3, stride=1, padding=2)  # b, 8, 15, 1
         
         self.decoder3 =   nn.Conv2d(128, 64, 3, stride=1, padding=1)  # b, 1, 28, 28
         self.decoder4 =   nn.Conv2d(64, 32, 3, stride=1, padding=1)
         self.decoder5 =   nn.Conv2d(32, 2, 3, stride=1, padding=1)
 
-        self.decoderf1 =   nn.Conv2d(128, 64, 3, stride=1, padding=1)
-        self.decoderf2=   nn.Conv2d(64, 32, 3, stride=1, padding=1)
-        self.decoderf3 =   nn.Conv2d(32, 2, 3, stride=1, padding=1)
+        # self.decoderf1 =   nn.Conv2d(128, 64, 3, stride=1, padding=1)
+        # self.decoderf2=   nn.Conv2d(64, 32, 3, stride=1, padding=1)
+        # self.decoderf3 =   nn.Conv2d(32, 2, 3, stride=1, padding=1)
 
-        self.encoderf1 =   nn.Conv2d(16, 32, 3, stride=1, padding=1)
-        self.encoderf2=   nn.Conv2d(32, 64, 3, stride=1, padding=1)
-        self.encoderf3 =   nn.Conv2d(64, 128, 3, stride=1, padding=1)
+        # self.encoderf1 =   nn.Conv2d(16, 32, 3, stride=1, padding=1)
+        # self.encoderf2=   nn.Conv2d(32, 64, 3, stride=1, padding=1)
+        # self.encoderf3 =   nn.Conv2d(64, 128, 3, stride=1, padding=1)
         
         self.soft = nn.Softmax(dim =1)
 
@@ -139,32 +139,24 @@ class kinetwithsk(nn.Module):
         out = self.soft(out)
         return out
 
-class kinet(nn.Module):
+class kitenet(nn.Module):
     
     def __init__(self):
-        super(kinet, self).__init__()
+        super(kitenet, self).__init__()
         
-        self.encoder1 = nn.Conv2d(1, 32, 15, stride=1, padding=1)  # b, 16, 10, 10
-        self.encoder2=   nn.Conv2d(32, 64, 8, stride=1, padding=1)  # b, 8, 3, 3
-        self.encoder3=   nn.Conv2d(64, 128, 5, stride=1, padding=1)
+        self.encoder1 = nn.Conv2d(1, 32, 3, stride=1, padding=1)  # b, 16, 10, 10
+        self.encoder2=   nn.Conv2d(32, 64, 3, stride=1, padding=1)  # b, 8, 3, 3
+        self.encoder3=   nn.Conv2d(64, 128, 3, stride=1, padding=1)
         
-        self.encoder4=   nn.Conv2d(128, 256, 3, stride=1, padding=1)
-        self.encoder5=   nn.Conv2d(256, 512, 3, stride=1, padding=1)
+        # self.encoder4=   nn.Conv2d(128, 256, 3, stride=1, padding=1)
+        # self.encoder5=   nn.Conv2d(256, 512, 3, stride=1, padding=1)
         
-        self.decoder1 = nn.Conv2d(512, 256, 3, stride=1,padding=2)  # b, 16, 5, 5
-        self.decoder2 =   nn.Conv2d(256, 128, 3, stride=1, padding=2)  # b, 8, 15, 1
+        # self.decoder1 = nn.Conv2d(512, 256, 3, stride=1,padding=2)  # b, 16, 5, 5
+        # self.decoder2 =   nn.Conv2d(256, 128, 3, stride=1, padding=2)  # b, 8, 15, 1
         
-        self.decoder3 =   nn.Conv2d(128, 64, 5, stride=1, padding=1)  # b, 1, 28, 28
-        self.decoder4 =   nn.Conv2d(64, 32, 8, stride=1, padding=1)
-        self.decoder5 =   nn.Conv2d(32, 2, 15, stride=1, padding=1)
-
-        self.decoderf1 =   nn.Conv2d(128, 64, 3, stride=1, padding=1)
-        self.decoderf2=   nn.Conv2d(64, 32, 3, stride=1, padding=1)
-        self.decoderf3 =   nn.Conv2d(32, 2, 3, stride=1, padding=1)
-
-        self.encoderf1 =   nn.Conv2d(16, 32, 3, stride=1, padding=1)
-        self.encoderf2=   nn.Conv2d(32, 64, 3, stride=1, padding=1)
-        self.encoderf3 =   nn.Conv2d(64, 128, 3, stride=1, padding=1)
+        self.decoder3 =   nn.Conv2d(128, 64, 3, stride=1, padding=1)  # b, 1, 28, 28
+        self.decoder4 =   nn.Conv2d(64, 32, 3, stride=1, padding=1)
+        self.decoder5 =   nn.Conv2d(32, 2, 3, stride=1, padding=1)
         
         self.soft = nn.Softmax(dim =1)
     
