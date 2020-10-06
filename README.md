@@ -1,12 +1,12 @@
 # KiU-Net-pytorch
 
- <a href="https://arxiv.org/abs/2006.04878"> Paper </a> |  <a href="https://sites.google.com/view/kiunet/home"> Project Page </a>
+ <a href="https://arxiv.org/abs/2006.04878"> Paper (Conference) </a> | <a href="https://arxiv.org/pdf/2010.01663.pdf"> Paper (Journal Extension) </a> | <a href="https://sites.google.com/view/kiunet/home"> Project Page </a>
 
 
-Official Pytorch Code for the paper "KiU-Net: Towards Accurate Segmentation of Biomedical Images using Over-complete Representations" , presented at MICCAI 2020 and its
+Official Pytorch Code for the paper ["KiU-Net: Towards Accurate Segmentation of Biomedical Images using Over-complete Representations"](https://arxiv.org/abs/2006.04878) , presented at MICCAI 2020 and its
 
 Journal Extension:
-"KiU-Net: Overcomplete Convolutional Architectures for Biomedical Image and Volumetric Segmentation" (Under Review)
+["KiU-Net: Overcomplete Convolutional Architectures for Biomedical Image and Volumetric Segmentation" (Under Review)](https://arxiv.org/pdf/2010.01663.pdf)
 
 # About this repo:
 
@@ -131,13 +131,13 @@ The dataloader code is inspired from <a href="https://github.com/cosmic-cortex/p
 # Citation:
 
 ```bash 
-@misc{jose2020kiunet,
-    title={KiU-Net: Towards Accurate Segmentation of Biomedical Images using Over-complete Representations},
-    author={Jeya Maria Jose and Vishwanath Sindagi and Ilker Hacihaliloglu and Vishal M. Patel},
-    year={2020},
-    eprint={2006.04878},
-    archivePrefix={arXiv},
-    primaryClass={eess.IV}
+@inproceedings{valanarasu2020kiu,
+  title={KiU-Net: Towards Accurate Segmentation of Biomedical Images Using Over-Complete Representations},
+  author={Valanarasu, Jeya Maria Jose and Sindagi, Vishwanath A and Hacihaliloglu, Ilker and Patel, Vishal M},
+  booktitle={Medical Image Computing and Computer Assisted Intervention--MICCAI 2020: 23rd International Conference, Lima, Peru, October 4--8, 2020, Proceedings, Part IV 23},
+  pages={363--373},
+  year={2020},
+  organization={Springer}
 }
 ```
 
