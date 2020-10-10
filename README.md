@@ -142,5 +142,12 @@ The dataloader code is inspired from <a href="https://github.com/cosmic-cortex/p
   organization={Springer}
 }
 ```
-
+```bash
+@article{valanarasu2020kiu,
+  title={KiU-Net: Overcomplete Convolutional Architectures for Biomedical Image and Volumetric Segmentation},
+  author={Valanarasu, Jeya Maria Jose and Sindagi, Vishwanath A and Hacihaliloglu, Ilker and Patel, Vishal M},
+  journal={arXiv preprint arXiv:2010.01663},
+  year={2020}
+}
+```
 Open an issue in case of any queries or mail me directly.
