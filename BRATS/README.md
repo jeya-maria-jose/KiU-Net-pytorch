@@ -45,4 +45,4 @@ Once you get the predictions, upload them in the [CBICA portal](https://ipp.cbic
 
 ### Acknowledgement.
 
-This code is built in top of the awesome dataloaders provided by [Thuyen Ngo](https://github.com/thuyen), found at [Link](https://github.com/ieee820/BraTS2018-tumor-segmentation).
+This code is built on top of the awesome dataloaders provided by [Thuyen Ngo](https://github.com/thuyen), found at [Link](https://github.com/ieee820/BraTS2018-tumor-segmentation).
