@@ -1,4 +1,4 @@
-# KiU-Net-pytorch [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/kiu-net-overcomplete-convolutional/liver-segmentation-on-lits2017)](https://paperswithcode.com/sota/liver-segmentation-on-lits2017?p=kiu-net-overcomplete-convolutional)  [![HitCount](http://hits.dwyl.com/{username}/{project}.svg)](http://hits.dwyl.com/{username}/{project})
+# KiU-Net-pytorch [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/kiu-net-overcomplete-convolutional/liver-segmentation-on-lits2017)](https://paperswithcode.com/sota/liver-segmentation-on-lits2017?p=kiu-net-overcomplete-convolutional)  [![HitCount](http://hits.dwyl.com/{jeya-maria-jose}/{KiU-Net-pytorch}.svg)](http://hits.dwyl.com/{jeya-maria-jose}/{KiU-Net-pytorch})
 
 
  <a href="https://arxiv.org/abs/2006.04878"> Paper (Conference) </a> | <a href="https://arxiv.org/pdf/2010.01663.pdf"> Paper (Journal Extension) </a> | <a href="https://sites.google.com/view/kiunet/home"> Project Page </a>
