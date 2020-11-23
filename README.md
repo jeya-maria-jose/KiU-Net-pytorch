@@ -39,8 +39,8 @@ In a generic "encoder-decoder" architecture , the initial few blocks of the enco
 
 ### Links for downloading the public Datasets:
 
-1) GLAS Dataset - <a href="https://warwick.ac.uk/fac/sci/dcs/research/tia/glascontest/"> Link </a>  
-2) RITE Dataset - <a href="https://medicine.uiowa.edu/eye/rite-dataset"> Link </a>  
+1) GLAS Dataset - <a href="https://warwick.ac.uk/fac/sci/dcs/research/tia/glascontest/"> Link </a> | <a href = "https://drive.google.com/drive/folders/1dwhjqE0vC0KL_siGUeqMUq08KyO1bPKH?usp=sharing"> Resized </a> 
+2) RITE Dataset - <a href="https://medicine.uiowa.edu/eye/rite-dataset"> Link </a> | <a href = "https://drive.google.com/drive/folders/1WTPRJk8Q-Bx-uqMyfoL9JHi7vKotwgL8?usp=sharing"> Resized </a> 
 3) BraTS Dataset - <a href="https://www.med.upenn.edu/cbica/brats2020/data.html"> Link </a>  
 4) LiTS Dataset - <a href="https://competitions.codalab.org/competitions/17094"> Link </a>  
 5) Brain Anatomy US dataset introduced in the paper will be made public in the future.
