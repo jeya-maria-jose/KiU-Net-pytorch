@@ -1,7 +1,7 @@
 # KiU-Net-pytorch [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/kiu-net-overcomplete-convolutional/liver-segmentation-on-lits2017)](https://paperswithcode.com/sota/liver-segmentation-on-lits2017?p=kiu-net-overcomplete-convolutional)
 
 
- <a href="https://arxiv.org/abs/2006.04878"> Paper (Conference) </a> | <a href="https://arxiv.org/pdf/2010.01663.pdf"> Paper (Journal Extension) </a> | <a href="https://sites.google.com/view/kiunet/home"> Project Page </a>| <a href="https://drive.google.com/file/d/1YJYXrdgAF7-289-jwbCr7Gzut7UrK7Am/view"> Slides </a>
+ <a href="https://arxiv.org/abs/2006.04878"> Paper (Conference) </a> | <a href="https://arxiv.org/pdf/2010.01663.pdf"> Paper (Journal Extension) </a> | <a href="https://sites.google.com/view/kiunet/kiu-net"> Project Page </a>| <a href="https://drive.google.com/file/d/1YJYXrdgAF7-289-jwbCr7Gzut7UrK7Am/view"> Slides </a>
 
 
 Official Pytorch Code for the paper ["KiU-Net: Towards Accurate Segmentation of Biomedical Images using Over-complete Representations"](https://arxiv.org/abs/2006.04878) , presented at MICCAI 2020 and its
