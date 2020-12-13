@@ -288,8 +288,9 @@ for epoch in range(args.epochs):
             
             cv2.imwrite(fulldir+image_filename, yHaT[0,1,:,:])
             # cv2.imwrite(fulldir+'/gt_{}.png'.format(count), yval[0,:,:])
-            torch.save(model.state_dict(), fulldir+args.model+".pth")
-            torch.save(model.state_dict(), direc+"model.pth")
+        fulldir = direc+"/{}/".format(epoch)
+        torch.save(model.state_dict(), fulldir+args.model+".pth")
+        torch.save(model.state_dict(), direc+"model.pth")
             
         if bestdice<tf1:
             bestdice = tf1 
