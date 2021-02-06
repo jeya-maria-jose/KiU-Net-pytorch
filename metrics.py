@@ -15,7 +15,7 @@ class LogNLLLoss(_WeightedLoss):
         self.ignore_index = ignore_index
 
     def forward(self, y_input, y_target):
-        y_input = torch.log(y_input + EPSILON)
+        # y_input = torch.log(y_input + EPSILON)
         return cross_entropy(y_input, y_target, weight=self.weight,
                              ignore_index=self.ignore_index)
 

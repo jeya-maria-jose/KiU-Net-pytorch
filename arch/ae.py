@@ -44,7 +44,7 @@ class autoencoder(nn.Module):
         
         out = F.relu(F.interpolate(self.decoder5(out),scale_factor=(2,2),mode ='bilinear'))
         # print(out.shape)
-        out = self.soft(out)
+        # out = self.soft(out)
         return out
 
 class unet(nn.Module):
@@ -90,7 +90,7 @@ class unet(nn.Module):
         out = F.relu(F.interpolate(self.decoder5(out),scale_factor=(2,2),mode ='bilinear'))
         # print(out.shape)
         
-        out = self.soft(out)
+        # out = self.soft(out)
         return out
 
 class kinetwithsk(nn.Module):
@@ -136,7 +136,7 @@ class kinetwithsk(nn.Module):
         out = torch.add(out,t1)
         out = F.relu(F.max_pool2d(self.decoder5(out),2,2))
         
-        out = self.soft(out)
+        # out = self.soft(out)
         return out
 
 class kitenet(nn.Module):
@@ -171,7 +171,7 @@ class kitenet(nn.Module):
         out = F.relu(F.max_pool2d(self.decoder4(out),2,2))
         out = F.relu(F.max_pool2d(self.decoder5(out),2,2))
 
-        out = self.soft(out)
+        # out = self.soft(out)
         
         return out
 
@@ -299,7 +299,7 @@ class kiunet(nn.Module):
         out = F.relu(self.final(out))  #1*1 conv
         
 
-        out = self.soft(out)
+        # out = self.soft(out)
         
         return out
 
@@ -461,7 +461,7 @@ class reskiunet(nn.Module):
         out = F.relu(self.final(out))
         
 
-        out = self.soft(out)
+        # out = self.soft(out)
         # print(out.shape)
         return out
 
@@ -644,7 +644,7 @@ class densekiunet(nn.Module):
         out = F.relu(self.final(out))
         
 
-        out = self.soft(out)
+        # out = self.soft(out)
         # print(out.shape)
         return out
 
