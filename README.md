@@ -7,7 +7,7 @@
 Official Pytorch Code for the paper ["KiU-Net: Towards Accurate Segmentation of Biomedical Images using Over-complete Representations"](https://arxiv.org/abs/2006.04878) , presented at MICCAI 2020 and its
 
 Journal Extension:
-["KiU-Net: Overcomplete Convolutional Architectures for Biomedical Image and Volumetric Segmentation" (Under Review)](https://arxiv.org/pdf/2010.01663.pdf)
+["KiU-Net: Overcomplete Convolutional Architectures for Biomedical Image and Volumetric Segmentation" ](https://arxiv.org/pdf/2010.01663.pdf), IEEE Transactions on Medical Imaging (IEEE TMI)
 
 # About this repo:
 
