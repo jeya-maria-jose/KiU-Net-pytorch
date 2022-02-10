@@ -2,9 +2,9 @@ Install custom pytorch kernels from https://github.com/thuyen/multicrop
 
 ## Required Python libraries
 
-nibable, nipype, natsort, SimpleITK
+nibabel, nipype, natsort, SimpleITK
 
-`pip install nibable,nipype,natsort,SimpleITK`
+`pip install nibabel,nipype,natsort,SimpleITK`
 
 ## Required Sofware
 
