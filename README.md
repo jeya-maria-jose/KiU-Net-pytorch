@@ -43,7 +43,7 @@ In a generic "encoder-decoder" architecture , the initial few blocks of the enco
 2) RITE Dataset - <a href="https://medicine.uiowa.edu/eye/rite-dataset"> Link (Original)</a> | <a href = "https://drive.google.com/drive/folders/1WTPRJk8Q-Bx-uqMyfoL9JHi7vKotwgL8?usp=sharing"> Link (Resized) </a> 
 3) BraTS Dataset - <a href="https://www.med.upenn.edu/cbica/brats2020/data.html"> Link </a>  
 4) LiTS Dataset - <a href="https://competitions.codalab.org/competitions/17094"> Link </a>  
-5) Brain Anatomy US dataset introduced in the paper will be made public in the future.
+5) Unfortunately, Brain Anatomy US dataset introduced in the paper cannot be made public because of pending IRB approval.
 
 # Using the Code for your dataset
 
